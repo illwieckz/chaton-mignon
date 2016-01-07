@@ -1,0 +1,85 @@
+#! /bin/sh
+
+## display a shiny notice (it's a demo after all)
+## this is the "malicious code"
+## replace this code by whatever you want
+send_notice () {
+	/usr/bin/env python <<-EOF
+	# -*- coding: utf-8 -*-
+	import dbus
+	item = ("org.freedesktop.Notifications")
+	path = ("/org/freedesktop/Notifications")
+	interface = ("org.freedesktop.Notifications")
+
+	icon = "${1}"
+	array = ""
+	hint = ""
+	time = ${2}
+	app_name = ("${3}")
+	title = ("${4}")
+	body = ("${5}")
+
+	bus = dbus.SessionBus()
+	notif = bus.get_object(item, path)
+	notify = dbus.Interface(notif, interface)
+	notify.Notify(app_name, 0, icon, title, body, array, hint, time)
+	EOF
+}
+
+## instead of that, feel free to control some instant messaging or mailing software
+## to brodcast the file to more people, write an autostart desktop entry to keep
+## your malicious code running each time the user opens his desktop session, see
+## http://standards.freedesktop.org/autostart-spec/autostart-spec-latest.html
+## then try to cipher some files for ransoming purpose, try to record some password
+## typing, look for address books and marketable informations like that, feel free
+## to use the user's computing and networking resources for your own purpose, put a
+## monetizing adware in his browser, open a network backdoor for future fun, browse
+## local network and filesystem, and start right now to download some illegal stuff
+## on the user's filesystem to help you to convinct him if you are a governemental
+## organization
+send_notice 'face-devilish' 50000 'ron-ron' 'Resistance is feline !' 'All your ron-rons are belong to us…'
+
+## create a temporary file with credible name since it can be displayed by some editors
+## create this file in an temporary directory
+base_name='chaton-mignon'
+file_name="${base_name}.odt"
+temp_dir="$(mktemp -d "/tmp/${base_name}.XXXXXXXX")"
+temp_file="${temp_dir}/${file_name}"
+
+## the file is an odt (pkzip archive), so it's already packed, expand it as is
+base64 -d <<\EOF > "${temp_file}"
+<DOCUMENT>
+EOF
+
+## open the file with user's favorite editor using freedesktop mechanism
+## so the user get a real document to not let it become suspicious
+xdg-open "${temp_file}" & pid_launcher="${!}"
+
+## tell the admin someone was careless
+logger -t 'ron-ron' "$(whoami) opened the door for the cat!" >/dev/null
+
+## wait while the launcher run the editor
+while ps "${pid_launcher}" 2>/dev/null
+do
+	true
+done
+
+## wait while the editor open the file
+sleep 3s
+
+## wait while the editor keep the document opened
+while [ "x$(lsof "${temp_file}" 2>/dev/null | tail -n 1 | awk '{ print $9 }')" = "x${temp_file}" ]
+do
+	true
+done
+
+## delete temporary file
+rm "${temp_file}"
+
+## delete temporary dir
+rmdir "${temp_dir}"
+
+## do something malicious one more time
+send_notice 'face-embarrassed' 50000 'ron-ron' 'Ron-Ron' 'ron…'
+
+#EOF
