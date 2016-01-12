@@ -8,7 +8,7 @@ Chaton Mignon
 About
 -----
 
-This code is a proof of concept I made years ago (when common Linux desktops were able to run _[Desktop Entries](http://standards.freedesktop.org/desktop-entry-spec/latest/)_ without requiring execution bit). The first iteration was around 2007. I added afterward a convenient way to embed the malicious desktop file inside a tar archive that keeps the execution bit, so the user who downloads the file can run it right after extraction. The _"Chaton Mignon"_ name means _"Cute Cat"_, and was taken as an example of widely recognized appealing content an user wants to display.
+This code is a proof of concept I made years ago (when common Linux desktops were able to run _[Desktop Entries](http://standards.freedesktop.org/desktop-entry-spec/latest/)_ without requiring execution bit). The first iteration was around 2007. I added afterward a convenient way to embed the malicious desktop file inside a tar archive that keeps the execution bit, so the user who downloads the file can run it right after extraction. The _"Chaton Mignon"_ name means _"Cute Kitten"_, and was taken as an example of widely recognized appealing content an user wants to see.
 
 So this is how it works:
 
