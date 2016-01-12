@@ -64,11 +64,18 @@ do
 	true
 done
 
-## wait while the editor open the file
-sleep 3s
+isOpen() {
+	[ "x$(lsof "${temp_file}" 2>/dev/null | tail -n 1 | awk '{ print $9 }')" = "x${temp_file}" ]
+}
 
-## wait while the editor keep the document opened
-while [ "x$(lsof "${temp_file}" 2>/dev/null | tail -n 1 | awk '{ print $9 }')" = "x${temp_file}" ]
+## wait while the editor open the file
+while ! isOpen
+do
+	true
+done
+
+## wait while the editor keeps the document open
+while isOpen
 do
 	true
 done
